@@ -16,7 +16,7 @@ output application/xml
 {
 	ZFLT_GET_VEHINFO: {
 		"import": {
-			IV_VIN: if ( !isEmpty(attributes.uriParams.vin) ) attributes.uriParams.vin else null,
+			IV_VIN: if ( !isEmpty(attributes.queryParams.vin) ) attributes.uriParams.vin else null,
 		}
 	}
 }]]></ee:set-payload>

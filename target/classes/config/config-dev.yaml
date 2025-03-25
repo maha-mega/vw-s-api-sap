@@ -1,0 +1,7 @@
+target:
+  host: 10.36.11.26
+  port: 22
+  username: "S_SALESFORCE"
+  SAP:
+    systemnumber: 00
+    clientid: 200
