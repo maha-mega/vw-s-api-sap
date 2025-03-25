@@ -1,0 +1,42 @@
+{
+  "configs": [
+    "global.xml",
+    "implementation-sap.xml"
+  ],
+  "secureProperties": [],
+  "supportedJavaVersions": [],
+  "redeploymentEnabled": true,
+  "name": "com.mycompany:vw-s-api-sap-rf:1.0.0-SNAPSHOT",
+  "minMuleVersion": "4.9.0",
+  "requiredProduct": "MULE_EE",
+  "classLoaderModelLoaderDescriptor": {
+    "id": "mule",
+    "attributes": {
+      "exportedPackages": [],
+      "exportedResources": [
+        "log4j2.xml",
+        "global.xml",
+        "implementation-sap.xml",
+        "config/config-local-secure.yaml",
+        "config/config-local.yaml",
+        "config/config-prod.yaml",
+        "config/config-uat.yaml",
+        "config/config-dev.yaml",
+        "config/config-prod-secure.yaml",
+        "config/config-dev-secure.yaml",
+        "config/config-uat-secure.yaml",
+        "config/config-qa.yaml",
+        "application-types.xml",
+        "files/motovate_caroptionprices.txt",
+        "files/motovate_carprice.txt",
+        "files/motovate_colours.txt",
+        "files/motovate_trim2.txt",
+        "files/motovate_trim.txt"
+      ]
+    }
+  },
+  "bundleDescriptorLoader": {
+    "id": "mule",
+    "attributes": {}
+  }
+}

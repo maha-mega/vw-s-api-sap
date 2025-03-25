@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:sap="http://www.mulesoft.org/schema/mule/sap"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/current/mule-sap.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="implementation-vin-lookupFlow" doc:id="43990a76-532b-4eb3-9816-ddae45b3a14d" >
+		<http:listener doc:name="Listener" doc:id="879d2a6b-fbec-451c-b3aa-6b0b7b59c2ca" config-ref="interface_baseListener" path="/rfc/{vin}"/>
+		<ee:transform doc:name="Transform Message" doc:id="5bd8572d-72db-4081-96a9-7f2b0c7f854b" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+{
+	ZFLT_GET_VEHINFO: {
+		"import": {
+			IV_VIN: if ( !isEmpty(attributes.queryParams.vin) ) attributes.uriParams.vin else null,
+		}
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<sap:synchronous-remote-function-call doc:name="Synchronous Remote Function Call" doc:id="9c89b0d8-4022-4ddc-811b-d02aa1f8a554" config-ref="SAP_Config" key="ZFLT_GET_VEHINFO"/>
+		<ee:transform doc:name="Transform Message" doc:id="78f62bdc-2bea-4608-91f8-a41c91f28f24" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="Transform Message" doc:id="5eb95a76-fc70-4fe5-b9dd-ff1c2450e27c" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+"vin": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.VIN,
+"comm_no": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.COMM_NO,
+"model_code": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.MODEL_CODE,
+"model_description": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.MODEL_DESCRP,
+"model_ext":payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.MODEL_EXT,
+"model_year": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.MODEL_YR,
+"sls_mod_year": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.SLS_MOD_YR,
+"colour": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.COLOUR,
+"trim": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.ZTRIM,
+"options": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.OPTIONS,
+"engine_no":payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.ENGINE_NO,
+"arr_date":payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.ARRDATE,
+"trans_dt":payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.TRANS_DT,
+"trans_tm":payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.TRANS_TM,
+"puid":payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.PUID,
+"equigroup_pr": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.EQUIGROUP_PR,
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

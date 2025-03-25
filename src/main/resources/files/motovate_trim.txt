@@ -1,0 +1,22 @@
+model code|trim code|trim description|price|pricfrom|priceto|model year|incl tax|active
+1T332Z|TL|Truffle|     0.00|20170421|99991231|2015|N|Y
+1T332Z|YV|Anthracite/Anthracite/Black/Pearl Gray|     0.00|20170418|99991231|2015|N|Y
+2CAA72|RF|Anthracite-Gray/Anthracite-Anthracite/ Black|     0.00|20170529|99991231|2015|N|Y
+2CAA85|RF|Anthracite-Gray/Anthracite-Anthracite/ Black|     0.00|20170529|99991231|2015|N|Y
+2CBT85|DM|Austin Anthracite Grey|     0.00|20170529|99991231|2015|N|Y
+2CBT85|RF|Anthracite-Gray/Anthracite-Anthracite/ Black|     0.00|20170529|99991231|2015|N|Y
+2CHA82|RF|Anthracite-Gray/Anthracite-Anthracite/ Black|     0.00|20170529|99991231|2015|N|Y
+4A2A9G|CP|Dark Art Gray/Anthracite-Art Gray/Black|     0.00|20240402|99991231|2023|N|Y
+4A2A9G|FN|Anthracite-Red/Anthracite/Anthracite|     0.00|20240402|99991231|2023|N|Y
+4A2A9G|FZ|Black-Black/Black-Black/Black/ Moon Silv|     0.00|20240402|99991231|2023|N|Y
+4A2A9G|ML|Okapi Brown-Okapi Brown/Black-Black/ Bla|     0.00|20240402|99991231|2023|N|Y
+4A2A9G|MS|Mother-of-Pearl Beige-Mother-of-Pearl Be|     0.00|20230301|99991231|2023|N|Y
+4A2A9G|YD|Pearlescent Beige-Pearlescent Beige/ Gra|     0.00|20230301|99991231|2023|N|Y
+4A2AUA|CP|Dark Art Gray/Anthracite-Art Gray/Black|     0.00|20240402|99991231|2023|N|Y
+4A2AUA|FN|Anthracite-Red/Anthracite/Anthracite|     0.00|20240402|99991231|2023|N|Y
+4A2AUA|FZ|Black-Black/Black-Black/Black/ Moon Silv|     0.00|20240402|99991231|2023|N|Y
+4A2AUA|ML|Okapi Brown-Okapi Brown/Black-Black/ Bla|     0.00|20240402|99991231|2023|N|Y
+4A2AUA|MS|Mother-of-Pearl Beige-Mother-of-Pearl Be|     0.00|20230301|99991231|2023|N|Y
+4A2AUA|YD|Pearlescent Beige-Pearlescent Beige/ Gra|     0.00|20230301|99991231|2023|N|Y
+4A2C9G|FJ|Mother-of-Pearl Beige-Agate Gray/Black-M|     0.00|20240402|99991231|2024|N|Y
+4A2C9G|ML|No Trim Description - Contact VWSA IT|     0.00|20240402|99991231|2024|N|Y
