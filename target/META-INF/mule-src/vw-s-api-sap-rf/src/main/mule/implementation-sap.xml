@@ -8,6 +8,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
 	<flow name="implementation-vin-lookupFlow" doc:id="43990a76-532b-4eb3-9816-ddae45b3a14d" >
 		<http:listener doc:name="Listener" doc:id="879d2a6b-fbec-451c-b3aa-6b0b7b59c2ca" config-ref="interface_baseListener" path="/rfc"/>
+		<set-variable value="#[%dw 2.0&#10;output application/json&#10;---&#10;sizeOf(attributes.uriParams.id)]" doc:name="param" doc:id="52a29d85-dfff-4b93-9c1f-b65c4b422ebd" variableName="param"/>
 		<ee:transform doc:name="Transform Message" doc:id="5bd8572d-72db-4081-96a9-7f2b0c7f854b" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0

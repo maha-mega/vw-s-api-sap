@@ -16,8 +16,11 @@ output application/xml
 {
 	ZFLT_GET_VEHINFO: {
 		"import": {
-			IV_VIN: if ( !isEmpty(attributes.queryParams.vin) ) attributes.queryParams.vin else null,
+			(if(sizeOf(attributes.queryParams.vin) > 10){
+			IV_VIN: if ( !isEmpty(attributes.queryParams.vin) ) attributes.queryParams.vin else null}
+			else{
 			IV_COMM_NO: if ( !isEmpty(attributes.queryParams.comm) ) attributes.queryParams.comm else null
+			})
 		}
 	}
 }]]></ee:set-payload>
