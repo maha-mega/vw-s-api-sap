@@ -13,7 +13,7 @@ http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/fil
 http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/current/mule-sap.xsd
 http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
 	<sap:sap-config name="SAP_Config" doc:name="SAP Config" doc:id="96848b48-5021-4ac3-b0ab-387c0cb9aa4d" >
-		<sap:simple-connection-provider-connection username="${target.username}" password="${secure::target.password}" systemNumber="${target.systemnumber}" client="${target.clientid}" applicationServerHost="${target.host}" />
+		<sap:simple-connection-provider-connection username="${target.username}" password="${secure::password}" systemNumber="${target.sap.systemnumber}" client="${target.sap.clientid}" applicationServerHost="${target.host}" />
 	</sap:sap-config>
 	<http:listener-config name="interface_baseListener" doc:name="HTTP Listener config" doc:id="630daa6e-f20b-4464-83a0-85f3e0a4078c" >
 		<http:listener-connection host="0.0.0.0" port="8081" />
