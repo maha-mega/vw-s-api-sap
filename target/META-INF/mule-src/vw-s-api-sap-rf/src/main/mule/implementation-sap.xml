@@ -43,21 +43,21 @@ output application/json
 ---
 {
 "vin": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.VIN,
-"comm_no": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.COMM_NO,
-"model_code": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.MODEL_CODE,
-"model_description": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.MODEL_DESCRP,
-"model_ext":payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.MODEL_EXT,
-"model_year": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.MODEL_YR,
-"sls_mod_year": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.SLS_MOD_YR,
+"commissionNumber": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.COMM_NO,
+"modelCode": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.MODEL_CODE,
+"modelDescription": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.MODEL_DESCRP,
+"modelExtension":payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.MODEL_EXT,
+"modelYear": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.MODEL_YR,
+"salesModelYear": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.SLS_MOD_YR,
 "colour": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.COLOUR,
 "trim": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.ZTRIM,
 "options": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.OPTIONS,
-"engine_no":payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.ENGINE_NO,
-"arr_date":payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.ARRDATE,
-"trans_dt":payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.TRANS_DT,
-"trans_tm":payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.TRANS_TM,
-"puid":payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.PUID,
-"equigroup_pr": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.EQUIGROUP_PR,
+"engineNumber":payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.ENGINE_NO,
+"arrivalDate":payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.ARRDATE,
+"transactionDate":payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.TRANS_DT,
+"transactionTime":payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.TRANS_TM,
+"nadinePuid":payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.PUID,
+"equipmentGroupPr": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.EQUIGROUP_PR,
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
