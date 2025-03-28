@@ -5,3 +5,4 @@ target:
   sap:
     systemnumber: "00"
     clientid: "200"
+    jco.type: "so"

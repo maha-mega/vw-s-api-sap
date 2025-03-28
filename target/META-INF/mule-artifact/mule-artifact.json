@@ -14,24 +14,24 @@
     "attributes": {
       "exportedPackages": [],
       "exportedResources": [
-        "log4j2.xml",
-        "global.xml",
-        "implementation-sap.xml",
+        "application-types.xml",
+        "config/config-int-secure.yaml",
+        "config/config-int.yaml",
         "config/config-local-secure.yaml",
         "config/config-local.yaml",
-        "config/config-prod.yaml",
-        "config/config-uat.yaml",
-        "config/config-dev.yaml",
         "config/config-prod-secure.yaml",
-        "config/config-dev-secure.yaml",
-        "config/config-uat-secure.yaml",
+        "config/config-prod.yaml",
         "config/config-qa.yaml",
-        "application-types.xml",
+        "config/config-uat-secure.yaml",
+        "config/config-uat.yaml",
         "files/motovate_caroptionprices.txt",
         "files/motovate_carprice.txt",
         "files/motovate_colours.txt",
+        "files/motovate_trim.txt",
         "files/motovate_trim2.txt",
-        "files/motovate_trim.txt"
+        "global.xml",
+        "implementation-sap.xml",
+        "log4j2.xml"
       ]
     }
   },

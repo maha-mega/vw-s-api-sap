@@ -5,3 +5,4 @@ target:
   sap:
     systemnumber: "00"
     clientid: "090"
+    jco.type: "dll"
