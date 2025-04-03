@@ -1,29 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+<mule xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
+	xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
 	xmlns:sap="http://www.mulesoft.org/schema/mule/sap"
 	xmlns:http="http://www.mulesoft.org/schema/mule/http"
 	xmlns:file="http://www.mulesoft.org/schema/mule/file"
 	xmlns="http://www.mulesoft.org/schema/mule/core"
-	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd 
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd 
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd 
 http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
 http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/current/mule-sap.xsd
-http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
-	<sap:sap-config name="SAP_Config" doc:name="SAP Config" doc:id="96848b48-5021-4ac3-b0ab-387c0cb9aa4d" >
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sap:sap-config name="SAP_Config" doc:name="SAP Config" doc:id="47495aab-6c02-492f-8780-3bc990e9351c" >
 		<sap:simple-connection-provider-connection username="${target.username}" password="${secure::password}" systemNumber="${target.sap.systemnumber}" client="${target.sap.clientid}" applicationServerHost="${target.host}" />
 	</sap:sap-config>
-	<http:listener-config name="interface_baseListener" doc:name="HTTP Listener config" doc:id="630daa6e-f20b-4464-83a0-85f3e0a4078c" >
+	<http:listener-config name="interface_baseListener" doc:name="HTTP Listener config" doc:id="155a2c38-17bf-4c3a-8514-e33327141f61" >
 		<http:listener-connection host="0.0.0.0" port="8081" />
 	</http:listener-config>
-	<global-property doc:name="Global Property" doc:id="1a43e737-ccc4-4370-b789-bb4bf1cbff04" name="mule.key" value="secureVW" />
-	<global-property doc:name="Global Property" doc:id="2e202b2d-e3fe-4bcc-b595-c3975a6e5521" name="mule.env" value="local" />
-	<configuration-properties doc:name="Configuration properties" doc:id="5d7aa36f-cf39-4bca-b49a-64ac24e66c5e" file="config/config-${mule.env}.yaml" />
-	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="a06ba3da-b998-4cd5-9227-781570d1941a" file="config/config-${mule.env}-secure.yaml" key="${mule.key}" >
+	<global-property doc:name="Global Property" doc:id="eddb4ad7-ced0-4e59-a735-eeccfcf2c257" name="mule.key" value="secureVW" />
+	<global-property doc:name="Global Property" doc:id="80d462ba-03df-4184-88de-e5684279ba4c" name="mule.env" value="local" />
+	<configuration-properties doc:name="Configuration properties" doc:id="ee029c52-61db-4d7f-9f0c-a8daed331141" file="config/config-${mule.env}.yaml" />
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="b7ce2fc5-41ff-4721-b9c8-d2c03e8742a0" file="config/config-${mule.env}-secure.yaml" key="${mule.key}" >
 		<secure-properties:encrypt algorithm="Blowfish" />
 	</secure-properties:config>
+	<error-handler name="globalError_Handler" doc:id="fbbfd379-1a97-4253-b6b3-e0f6a0ca9afd" >
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="49ba2c89-73dd-4461-b6cd-ee3625dfd633" type="APP:BAD_REQUEST">
+			<logger level="INFO" doc:name="Logger" doc:id="231427da-cbfd-40ab-a108-c544f979cd9e" message="#[error]"/>
+			<ee:transform doc:name="Transform Message" doc:id="a6426d21-e28f-464a-9127-76ebcf4e351d" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+"code": "400",
+"description": error.errorType,
+"message": "Application rejected the message sent",
+"stackTrace": error.detailedDescription
+}]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="37d5e214-bc80-4d65-a50f-91d0b85f104c" type="APP:SAP_SYSTEM_ERROR" >
+			<logger level="INFO" doc:name="Logger" doc:id="5a01fb95-e19f-44fc-9e38-5d814cb0b1da" message="#[error]" />
+			<ee:transform doc:name="Transform Message" doc:id="f00e4ce1-19c7-43e2-b565-cdd39c2d55dd" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+"code": "422",
+"description": error.errorType,
+"message": "SAP application is unavailable. Contact support if the issue persists.",
+"stackTrace": error.detailedDescription
+}]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="1c34b0b6-5d92-4b4e-93ca-4b7946dcf0b8" type="ANY" >
+			<logger level="INFO" doc:name="Logger" doc:id="c969bfc4-abf1-4c51-8ca9-e4f70c692713" message="#[error]" />
+			<ee:transform doc:name="Transform Message" doc:id="03cda1fe-2b33-4384-89e2-e5af62558d22" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+"code": "500",
+"description": error.errorType,
+"message": "Unable to process the request.",
+"stackTrace": error.detailedDescription
+}]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+		</on-error-propagate>
+	</error-handler>
+	
+	<tls:context name="TLS_Context" doc:name="TLS Context" doc:id="031190c2-f185-4d49-87e0-c9238b0f1c97" >
+		<tls:key-store path="certificates/keystore.jks" keyPassword="password" password="password" />
+	</tls:context>
+    	<api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="1f25ec81-c66f-41e4-a3b1-44165a65b1fd" flowRef="interface-main" /> 
+    
 
 
 </mule>

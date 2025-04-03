@@ -1,0 +1,16 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  success:
+    type: boolean
+  apiName:
+    type: string
+  version:
+    type: string
+  correlationId:
+    type: string
+  timestamp:
+    type: datetime
+  errorDetails:
+    type: array
+    items: !include error-details.raml

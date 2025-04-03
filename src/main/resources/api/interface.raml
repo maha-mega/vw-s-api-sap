@@ -1,0 +1,40 @@
+#%RAML 1.0
+title: Fleet SAP System API
+
+traits:
+  client-id-required: !include exchange_modules/50088c5e-b04c-4627-94c4-18415eb27305/trait-client-id-required/1.0.1/trait-client-id-required.raml
+  error-responses: !include exchange_modules/50088c5e-b04c-4627-94c4-18415eb27305/trait-error-responses/2.0.1/trait-error-responses.raml
+types:
+  SearchRequest: !include /datatypes/search-request.raml
+  SearchResponse: !include /datatypes/search-response.raml
+  OrderRequest: !include /datatypes/order-request.raml
+  OrderResponse: !include /datatypes/order-response.raml
+        
+/search:
+  is: [client-id-required, error-responses] 
+  post:
+    description: Informtion from SAP is retrieved using the vehicle serial number or commission number. 
+    body:
+      application/json:
+        type: SearchRequest
+    responses:
+      200:
+        body:
+          application/json:
+            type: SearchResponse
+            example: !include /examples/example-search-response.json
+
+/order:
+  is: [client-id-required, error-responses] 
+  post:
+    description: Send order details to SAP
+    body:
+      application/json:
+        type: OrderRequest
+        example: !include /examples/example-orders-request.json
+    responses:
+      200:
+        body:
+          application/json:
+            type: OrderResponse
+            example: !include /examples/example-orders-response.json

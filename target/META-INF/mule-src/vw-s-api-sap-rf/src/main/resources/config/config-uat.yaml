@@ -1,0 +1,11 @@
+target:
+  host: "10.36.11.26"
+  port: "22"
+  username: "S_SALESFORCE"
+  sap:
+    systemnumber: "00"
+    clientid: "200"
+    jco.type: "so"
+
+api.id: "2518445"
+

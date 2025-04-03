@@ -1,0 +1,130 @@
+#%RAML 1.0 Trait
+
+responses:
+  400:
+    body:
+      application/json:
+        type: !include datatypes/error-response.raml
+        example:
+          success: false
+          apiName: eapi-common-example
+          version: 1.0.0
+          correlationId: a91dcfe0-ccf1-11eb-81d2-00059a3c7a00
+          timestamp: 2021-06-14T11:19:47.328+02:00
+          errorDetails:
+            - code: 400
+              reason: ONE-CRM-COMMONS:SALESFORCE
+              message: "INVALID_CROSS_REFERENCE_KEY: Record Type ID: this ID value isn't valid for the user: 0126E000000SPRwQAO"
+  401:
+    body:
+      application/json:
+        type: !include datatypes/error-response.raml
+        example:
+          success: false
+          apiName: eapi-common-example
+          version: 1.0.0
+          correlationId: a91dcfe0-ccf1-11eb-81d2-00059a3c7a00
+          timestamp: 2021-06-14T11:19:47.328+02:00
+          errorDetails:
+            - code: 401
+              reason: ROCKY:INVALID_CLIENT
+              message: "Invalid Client"
+  404:
+    body:
+      application/json:
+        type: !include datatypes/error-response.raml
+        example:
+          success: false
+          apiName: eapi-common-example
+          version: 1.0.0
+          correlationId: a91dcfe0-ccf1-11eb-81d2-00059a3c7a00
+          timestamp: 2021-06-14T11:19:47.328+02:00
+          errorDetails:
+            - code: 404
+              reason: ROCKY:NOT_FOUND
+              message: "Resource not found"
+
+  405:
+    body:
+      application/json:
+        type: !include datatypes/error-response.raml
+        example:
+          success: false
+          apiName: eapi-common-example
+          version: 1.0.0
+          correlationId: a91dcfe0-ccf1-11eb-81d2-00059a3c7a00
+          timestamp: 2021-06-14T11:19:47.328+02:00
+          errorDetails:
+            - code: 405
+              reason: ROCKY:UNSUPPORTED_METHOD
+              message: "Unsupported Method"
+  406:
+    body:
+      application/json:
+        type: !include datatypes/error-response.raml
+        example:
+          success: false
+          apiName: eapi-common-example
+          version: 1.0.0
+          correlationId: a91dcfe0-ccf1-11eb-81d2-00059a3c7a00
+          timestamp: 2021-06-14T11:19:47.328+02:00
+          errorDetails:
+            - code: 406
+              reason: ROCKY:NOT_ACCEPTABLE
+              message: "Not Acceptable"
+  415:
+    body:
+      application/json:
+        type: !include datatypes/error-response.raml
+        example:
+          success: false
+          apiName: eapi-common-example
+          version: 1.0.0
+          correlationId: a91dcfe0-ccf1-11eb-81d2-00059a3c7a00
+          timestamp: 2021-06-14T11:19:47.328+02:00
+          errorDetails:
+            - code: 415
+              reason: ROCKY:UNSUPPORTED_MEDIA_TYPE
+              message: "Unsupported Media Type"
+  429:
+    body:
+      application/json:
+        type: !include datatypes/error-response.raml
+        example:
+          success: false
+          apiName: eapi-common-example
+          version: 1.0.0
+          correlationId: a91dcfe0-ccf1-11eb-81d2-00059a3c7a00
+          timestamp: 2021-06-14T11:19:47.328+02:00
+          errorDetails:
+            - code: 429
+              reason: ROCKY:TOO_MANY_REQUESTS
+              message: "Too many requests"
+  502:
+    body:
+      application/json:
+        type: !include datatypes/error-response.raml
+        example:
+          success: false
+          apiName: eapi-common-example
+          version: 1.0.0
+          correlationId: a91dcfe0-ccf1-11eb-81d2-00059a3c7a00
+          timestamp: 2021-06-14T11:19:47.328+02:00
+          errorDetails:
+            - code: 502
+              reason: ROCKY:BAD_GATEWAY
+              message: "Bad Gateway"
+  503:
+    body:
+      application/json:
+        type: !include datatypes/error-response.raml
+        example:
+          success: false
+          apiName: eapi-common-example
+          version: 1.0.0
+          correlationId: a91dcfe0-ccf1-11eb-81d2-00059a3c7a00
+          timestamp: 2021-06-14T11:19:47.328+02:00
+          errorDetails:
+            - code: 503
+              reason: ROCKY:SERVICE_UNAVAILABLE
+              message: "Service Unavailable"

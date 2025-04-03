@@ -7,7 +7,6 @@ http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
 	<flow name="implementation-vin-lookupFlow" doc:id="43990a76-532b-4eb3-9816-ddae45b3a14d" >
-		<http:listener doc:name="Listener" doc:id="879d2a6b-fbec-451c-b3aa-6b0b7b59c2ca" config-ref="interface_baseListener" path="/search"/>
 		<ee:transform doc:name="Transform Message" doc:id="5bd8572d-72db-4081-96a9-7f2b0c7f854b" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
@@ -58,6 +57,17 @@ output application/json
 "transactionTime":payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.TRANS_TM,
 "nadinePuid":payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.PUID,
 "equipmentGroupPr": payload.ZFLT_GET_VEHINFO.export.EV_VEHINFO.EQUIGROUP_PR,
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="implementation-sap-order-publish" doc:id="3235e21b-e734-4d0e-9711-e21124475e3f" >
+		<ee:transform doc:name="Transform Message" doc:id="4ba22cfc-7d2a-486d-a693-f3d9876eb862" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+{
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>

@@ -1,0 +1,10 @@
+{
+    "quoteName": "",
+    "quoteSFID": "",
+    "customerSFID": "",
+    "customerSAPID": "",
+    "quoteCreatedOn": "date",
+    "quoteAmount": "1000000",
+    "quotelineitems": [],
+    "deliveryInstructions": []
+}

@@ -1,29 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+<mule xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
+	xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
+	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
 	xmlns:sap="http://www.mulesoft.org/schema/mule/sap"
 	xmlns:http="http://www.mulesoft.org/schema/mule/http"
 	xmlns:file="http://www.mulesoft.org/schema/mule/file"
 	xmlns="http://www.mulesoft.org/schema/mule/core"
-	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd 
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd 
 http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
 http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/current/mule-sap.xsd
-http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
 	<sap:sap-config name="SAP_Config" doc:name="SAP Config" doc:id="96848b48-5021-4ac3-b0ab-387c0cb9aa4d" >
 		<sap:simple-connection-provider-connection username="${target.username}" password="${secure::password}" systemNumber="${target.sap.systemnumber}" client="${target.sap.clientid}" applicationServerHost="${target.host}" />
 	</sap:sap-config>
 	<http:listener-config name="interface_baseListener" doc:name="HTTP Listener config" doc:id="630daa6e-f20b-4464-83a0-85f3e0a4078c" >
-		<http:listener-connection host="0.0.0.0" port="8081" />
+		<http:listener-connection host="0.0.0.0" port="8092" tlsContext="TLS_Context" protocol="HTTPS"/>
 	</http:listener-config>
 	<global-property doc:name="Global Property" doc:id="1a43e737-ccc4-4370-b789-bb4bf1cbff04" name="mule.key" value="secureVW" />
-	<global-property doc:name="Global Property" doc:id="2e202b2d-e3fe-4bcc-b595-c3975a6e5521" name="mule.env" value="local" />
+	<global-property doc:name="Global Property" doc:id="2e202b2d-e3fe-4bcc-b595-c3975a6e5521" name="mule.env" value="uat" />
 	<configuration-properties doc:name="Configuration properties" doc:id="5d7aa36f-cf39-4bca-b49a-64ac24e66c5e" file="config/config-${mule.env}.yaml" />
 	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="a06ba3da-b998-4cd5-9227-781570d1941a" file="config/config-${mule.env}-secure.yaml" key="${mule.key}" >
 		<secure-properties:encrypt algorithm="Blowfish" />
 	</secure-properties:config>
-
+	<tls:context name="TLS_Context" doc:name="TLS Context" doc:id="0dda0b6a-7a0b-4265-8f69-1cf21c8a8ce7" >
+		<tls:key-store path="certificates/keystore.jks" keyPassword="password" password="password" />
+	</tls:context>
+    	<api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="49fb0c65-74a3-4f9c-9245-db7efa94f10e" flowRef="interface-main" /> 
+    
 
 </mule>
