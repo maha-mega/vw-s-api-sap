@@ -7,7 +7,11 @@ http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
 	<flow name="implementation-vin-lookupFlow" doc:id="43990a76-532b-4eb3-9816-ddae45b3a14d" >
-		<http:listener doc:name="Listener" doc:id="879d2a6b-fbec-451c-b3aa-6b0b7b59c2ca" config-ref="interface_baseListener" path="/search"/>
+		<http:listener doc:name="Listener" doc:id="879d2a6b-fbec-451c-b3aa-6b0b7b59c2ca" config-ref="interface_baseListener" path="/search">
+			<http:error-response statusCode='#[payload.code default "500"]'>
+				<http:body ><![CDATA[#[payload]]]></http:body>
+			</http:error-response>
+		</http:listener>
 		<ee:transform doc:name="Transform Message" doc:id="5bd8572d-72db-4081-96a9-7f2b0c7f854b" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
@@ -27,7 +31,10 @@ output application/xml
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<sap:synchronous-remote-function-call doc:name="Synchronous Remote Function Call" doc:id="9c89b0d8-4022-4ddc-811b-d02aa1f8a554" config-ref="SAP_Config" key="ZFLT_GET_VEHINFO"/>
+		<sap:synchronous-remote-function-call doc:name="Synchronous Remote Function Call" doc:id="9c89b0d8-4022-4ddc-811b-d02aa1f8a554" config-ref="SAP_Config" key="ZFLT_GET_VEHINFO">
+				<error-mapping sourceType="SAP:INVALID_INPUT" targetType="APP:BAD_REQUEST" />
+				<error-mapping targetType="APP:SAP_SYSTEM_ERROR" />
+			</sap:synchronous-remote-function-call>
 		<ee:transform doc:name="Transform Message" doc:id="78f62bdc-2bea-4608-91f8-a41c91f28f24" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0

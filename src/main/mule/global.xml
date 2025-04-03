@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
 	xmlns:sap="http://www.mulesoft.org/schema/mule/sap"
 	xmlns:http="http://www.mulesoft.org/schema/mule/http"
 	xmlns:file="http://www.mulesoft.org/schema/mule/file"
 	xmlns="http://www.mulesoft.org/schema/mule/core"
-	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd 
 http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
 http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/current/mule-sap.xsd
-http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
 	<sap:sap-config name="SAP_Config" doc:name="SAP Config" doc:id="96848b48-5021-4ac3-b0ab-387c0cb9aa4d" >
 		<sap:simple-connection-provider-connection username="${target.username}" password="${secure::password}" systemNumber="${target.sap.systemnumber}" client="${target.sap.clientid}" applicationServerHost="${target.host}" />
 	</sap:sap-config>
@@ -24,6 +25,56 @@ http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/sc
 	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="a06ba3da-b998-4cd5-9227-781570d1941a" file="config/config-${mule.env}-secure.yaml" key="${mule.key}" >
 		<secure-properties:encrypt algorithm="Blowfish" />
 	</secure-properties:config>
+	<error-handler name="globalError_Handler" doc:id="a100ac41-5496-4b2c-87b4-dd441d4737c0" >
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="36a5e382-a28d-45c0-92c6-3d7745a5e5a2" type="APP:BAD_REQUEST">
+			<logger level="INFO" doc:name="Logger" doc:id="95ce4c8e-1097-438d-85bc-b96e44aeae91" message="#[error]"/>
+			<ee:transform doc:name="Transform Message" doc:id="b32b3451-41af-412f-8844-f8e1148a0131" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+"code": "400",
+"description": error.errorType,
+"message": "Application rejected the message sent",
+"stackTrace": error.detailedDescription
+}]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="0dd7b605-1974-4f37-ab5d-e1bc108662ba" type="APP:SAP_SYSTEM_ERROR" >
+			<logger level="INFO" doc:name="Logger" doc:id="ae6038ed-9717-4f02-9b63-f4b8e88a8602" message="#[error]" />
+			<ee:transform doc:name="Transform Message" doc:id="6a846841-b6e7-4397-82a4-729656e7f569" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+"code": "422",
+"description": error.errorType,
+"message": "SAP application is unavailable. Contact support if the issue persists.",
+"stackTrace": error.detailedDescription
+}]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="85bd0924-be8c-47c7-8a54-65c0b44cc29e" type="ANY" >
+			<logger level="INFO" doc:name="Logger" doc:id="33952ab4-4f23-41cd-bf21-2907655607db" message="#[error]" />
+			<ee:transform doc:name="Transform Message" doc:id="5fe1ec66-ea3f-4429-a023-68a86d476cea" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+"code": "500",
+"description": error.errorType,
+"message": "Unable to process the request.",
+"stackTrace": error.detailedDescription
+}]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+		</on-error-propagate>
+	</error-handler>
 
 
 </mule>
