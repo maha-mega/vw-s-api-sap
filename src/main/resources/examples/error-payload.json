@@ -1,5 +1,5 @@
 {
-"code": "400",
+"code": 400,
 "description": "APP:BAD-REQUEST",
 "message": "SAP rejected message",
 "stackTrace": "trace message"

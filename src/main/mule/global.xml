@@ -38,7 +38,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 output application/json
 ---
 {
-"code": "400",
+"code": 400,
 "description": error.errorType,
 "message": "Application rejected the message sent",
 "stackTrace": error.detailedDescription
@@ -54,7 +54,7 @@ output application/json
 output application/json
 ---
 {
-"code": "422",
+"code": 422,
 "description": error.errorType,
 "message": "SAP application is unavailable. Contact support if the issue persists.",
 "stackTrace": error.detailedDescription
@@ -70,7 +70,7 @@ output application/json
 output application/json
 ---
 {
-"code": "500",
+"code": 500,
 "description": error.errorType,
 "message": "Unable to process the request.",
 "stackTrace": error.detailedDescription

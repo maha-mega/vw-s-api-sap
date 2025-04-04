@@ -5,11 +5,11 @@
       <types:shape format="weave" example="examples/error-payload.json"><![CDATA[%dw 2.0
 
 type error_response = {|
-  code: String, 
+  code: Number {"typeId": "int"}, 
   description: String, 
   message: String, 
   stackTrace: String
-|} {"example": "{\\\"code\\\":\\\"400\\\",\\\"description\\\":\\\"APP:BAD-REQUEST\\\",\\\"message\\\":\\\"SAP rejected message\\\",\\\"stackTrace\\\":\\\"trace message\\\"}"}
+|} {"example": "{\\\"code\\\":400,\\\"description\\\":\\\"APP:BAD-REQUEST\\\",\\\"message\\\":\\\"SAP rejected message\\\",\\\"stackTrace\\\":\\\"trace message\\\"}"}
 
 ]]></types:shape>
     </types:type>
